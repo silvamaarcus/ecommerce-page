@@ -17,7 +17,7 @@ export default function Header() {
   return (
     <>
       {/* Desktop Header */}
-      <div className="container mx-auto flex items-center justify-between border-b-2 border-b-neutral-light-graysh-blue m-4 py-4 hidden md:flex">
+      <div className="container mx-auto flex items-center justify-between border-b-2 border-b-neutral-light-graysh-blue m-4 py-4 hidden md:flex px-4">
         <div className="flex items-center justify-center gap-12">
           <Link href="/">
             <Image src={Logo} alt="sneackers" />
