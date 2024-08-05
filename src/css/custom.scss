@@ -1,0 +1,110 @@
+// Layout do Projeto
+
+// Tamanho do Container para dispositivos.
+$container-xl: 1440px;
+$container-l: 1216px;
+$container-m: 960px;
+$container-s: 620px;
+$container-xs: 340px;
+
+// Espaçamento padrão entre colunas.
+$gutter: 32px;
+
+// Mixin - Definindo responsividade através de funções, de forma automática.
+
+// EX) Para aplicar em uma classe, responsividade em tela menor que 960px:
+// @include responsive(s) {
+//   SERÁ EXECUTADO O QUUE FOR PASSADO AQUI DENTRO!
+// }
+
+@mixin responsive($device) {
+  @if $device == xl {
+    // Para resoluções maiores que 1440px
+    @media screen and (min-width: $container-xl) {
+      @content;
+    }
+  } @else if $device == ul {
+    // Para resoluções maiores que 960px
+    @media screen and (min-width: $container-m) {
+      @content;
+    }
+  } @else if $device == l {
+    // Para resoluções entre 1140px e 1440px
+    @media screen and (max-width: $container-xl) and (min-width: $container-l) {
+      @content;
+    }
+  } @else if $device == m {
+    // Para resoluções entre 960px e 1140px
+    @media screen and (max-width: $container-l) and (min-width: $container-s) {
+      @content;
+    }
+  } @else if $device == s {
+    // Para resoluções menores que 960px
+    @media screen and (max-width: $container-m) {
+      @content;
+    }
+  } @else if $device == xs {
+    // Para resoluções menores que 340px
+    @media screen and (max-width: $container-xs) {
+      @content;
+    }
+  }
+}
+
+// Função para dividir automaticamente a tela em Grids, são 12 no total.
+// A função irá respeitar o tamanho de tela presente, com responsividade.
+@function grid($col, $total: 12) {
+  @return ($col / $total) * 100%;
+}
+// Looping da função p/ determinar tamanho do grid e responsividade.
+@for $i from 1 through 12 {
+  .grid-#{$i} {
+    width: calc(#{grid($i)} - #{$gutter});
+    margin: $gutter / 2;
+
+    padding: 16px 0px;
+    float: left;
+
+    @include responsive(s) {
+      width: calc(100% - #{$gutter});
+      float: none;
+    }
+  }
+}
+// Looping da função p/ determinar apenas o tamnho do grid, sem "quebrar" a página.
+@for $i from 1 through 12 {
+  .grid-nobreak-#{$i} {
+    width: calc(#{grid($i)} - #{$gutter});
+    margin: $gutter / 2;
+
+    padding: 16px 0px;
+    float: left;
+  }
+}
+
+.custom-container {
+  max-width: $container-l; // Definindo tamanho padrão para container.
+  margin: 0 auto; // Centralizando container.
+
+  // Definir tamanho padrão.
+  // padding: 128px 24px; // Espaçamento-> eixo y: 128px - eixo x: 24px.
+
+  // clearfix
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  // Aplicando responsividade: ao chegar no 960px.
+  @include responsive(s) {
+    flex-direction: column;
+
+    // Definir tamanho padrão.
+    // padding: 96px 16px;
+  }
+}
+
+.bd {
+  border: 1px solid red;
+}
